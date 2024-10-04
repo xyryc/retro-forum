@@ -14,12 +14,12 @@ const displayAllPost = (posts) => {
   posts.forEach((post) => {
     const div = document.createElement("div");
     div.innerHTML = `
-<div>
+    <div>
         <div class="p-6 lg:p-12 flex gap-6 lg:flex-row flex-col items-center lg:items-start bg-[#F3F3F5] rounded-3xl">
-    <div class="indicator">
-        <span class="indicator-item badge ${
-          post.isActive ? "bg-green-600" : "bg-red-500"
-        }"></span>
+        <div class="indicator">
+          <span class="indicator-item badge ${
+            post.isActive ? "bg-green-600" : "bg-red-500"
+          }"></span>
         <div class="avatar">
             <div class="w-24 rounded-xl">
             <img src="${post.image}">
@@ -54,18 +54,40 @@ const displayAllPost = (posts) => {
             </div>
             </div>
             <div class="opacity-100">
-            <button id="addToList" onclick="markAsRead()" data-post="${JSON.stringify(post)}" class="addToList btn btn-circle bg-green-500 btn-sm">
+            <button id="addToList"
+              onclick="markAsRead('${post.description}', '${post.view_count}')"
+              data-post="${JSON.stringify(post)}" 
+              class="addToList btn btn-circle bg-green-500 btn-sm">
                 <i class="fa-solid fa-envelope-open text-white" aria-hidden="true"></i>
             </button>
             </div>
+          </div>
         </div>
-        </div>
+      </div>
     </div>
-        </div>
     `;
 
     postContainer.appendChild(div);
   });
+};
+
+const markAsRead = (description, view_count) => {
+  const markAsRead = document.getElementById("markAsReadContainer");
+  const div = document.createElement("div");
+  div.innerHTML = `
+            <div class="flex justify-between p-2 lg:p-3 bg-white rounded-2xl items-center gap-3">
+                <div class="lg:w-4/5 w-11/12">
+                    <p>
+                    It is one thing to subject yourself to a costume mishap
+                    </p>
+                </div>
+                <div class="lg:w-1/5 w-4/12 flex justify-end">
+                    <p><i class="fa-regular
+                    fa-eye" aria-hidden="true"></i> 1568</p>
+                </div>
+            </div>
+  `;
+  markAsRead.appendChild(div);
 };
 
 const handleSearchByCategory = () => {
