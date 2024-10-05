@@ -1,4 +1,6 @@
 const loadAllPost = async (category) => {
+  document.getElementById("post-container").innerHTML = "";
+
   const response = await fetch(
     `https://openapi.programming-hero.com/api/retro-forum/posts${
       category ? `?category=${category}` : ``
@@ -78,21 +80,36 @@ const markAsRead = (description, view_count) => {
             <div class="flex justify-between p-2 lg:p-3 bg-white rounded-2xl items-center gap-3">
                 <div class="lg:w-4/5 w-11/12">
                     <p>
-                    It is one thing to subject yourself to a costume mishap
+                    ${description}
                     </p>
                 </div>
                 <div class="lg:w-1/5 w-4/12 flex justify-end">
                     <p><i class="fa-regular
-                    fa-eye" aria-hidden="true"></i> 1568</p>
+                    fa-eye" aria-hidden="true"></i> ${view_count}</p>
                 </div>
             </div>
   `;
   markAsRead.appendChild(div);
+
+  handleCount();
 };
 
-const handleSearchByCategory = () => {
-  const searchText = document.getElementById("searchPosts").value;
-  loadAllPost(searchText);
+const handleCount = () => {
+  const prevCount = document.getElementById("markAsReadCounter").innerText;
+  const convertedCounter = parseInt(prevCount);
+  const sum = convertedCounter + 1;
+  document.getElementById("markAsReadCounter").innerText = sum;
 };
+
+
+document.getElementById("searchPosts").addEventListener("keyup", (e) => {
+  console.log(e.target.value);
+  loadAllPost(e.target.value)
+});
+
+// const handleSearchByCategory = () => {
+//   const searchText = document.getElementById("searchPosts").value;
+//   loadAllPost(searchText);
+// };
 
 loadAllPost();
